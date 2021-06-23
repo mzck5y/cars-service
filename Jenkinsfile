@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-       string(name: 'PR No.', defaultValue: '' description: '' )
+       string(name: 'PR No.', defaultValue: '', description: '' )
     }
 
     stages {
