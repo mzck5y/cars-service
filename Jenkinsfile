@@ -2,10 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        gitParameter name: 'PULL_REQUESTS', 
-                     type: 'PT_PULL_REQUEST',
-                     defaultValue: '1',
-                     sortMode: 'DESCENDING_SMART'
+       string(name: 'PR No.', defaultValue: '' description: '' )
     }
 
     stages {
@@ -37,6 +34,17 @@ pipeline {
             steps {
                 echo "Running post deplly stages    "
             }
+        }
+    }
+    post {
+        always {
+            echo "Pipeline finished send notifications or email."
+        }
+        success {
+            echo "Pipeline success."
+        }  
+        failure {
+            echo "Pipeline fail."
         }
     }
 }
