@@ -27,7 +27,7 @@ pipeline {
         }
 
         stage ("Approval Gate") {
-            step {
+            steps {
                 input 'Your approval is need to send to production'
             }
         }
