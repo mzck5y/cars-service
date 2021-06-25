@@ -26,6 +26,12 @@ pipeline {
             }
         }
 
+        stage ("Approval Gate") {
+            step {
+                input 'Your approval is need to send to production'
+            }
+        }
+
         stage ("build") {
             steps {
                 echo "Building the application..."
