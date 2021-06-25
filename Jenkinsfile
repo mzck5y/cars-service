@@ -6,6 +6,26 @@ pipeline {
     }
 
     stages {
+        stage ("SCM Checkout") {
+            steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [
+                        [
+                            name: '*/master'
+                        ]
+                    ], 
+                    extensions: [], 
+                    userRemoteConfigs: [
+                        [
+                            credentialsId: 'github-credentials', 
+                            url: 'https://github.com/mzck5y/cars-service'
+                        ]
+                    ]
+                ])
+            }
+        }
+
         stage ("build") {
             steps {
                 echo "Building the application..."
