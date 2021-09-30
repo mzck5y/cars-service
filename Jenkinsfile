@@ -1,17 +1,9 @@
 pipeline {
-agent any
-    tools {
-        // a bit ugly because there is no `@Symbol` annotation for the DockerTool
-        // see the discussion about this in PR 77 and PR 52: 
-        // https://github.com/jenkinsci/docker-commons-plugin/pull/77#discussion_r280910822
-        // https://github.com/jenkinsci/docker-commons-plugin/pull/52
-        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' '18.09'
-    }
 
-    parameters {
-       string(name: 'PR No.', defaultValue: '', description: '' )
+    agent {
+        docker { image 'node:14-alpine' }
     }
-
+    
     stages {
         stage ("SCM Checkout") {
             steps {
@@ -33,10 +25,6 @@ agent any
             }
         }
 
-        agent {
-            docker { image 'node:14-alpine' }
-        }
-        
         stage ("Approval Gate") {
             steps {
                 sh "docker --help"
