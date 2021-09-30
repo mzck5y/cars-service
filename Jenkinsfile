@@ -28,6 +28,7 @@ pipeline {
 
         stage ("Approval Gate") {
             steps {
+                sh "docker --help"
                 input 'Your approval is need to send to production'
             }
         }
