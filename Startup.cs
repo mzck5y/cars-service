@@ -1,17 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using OniCloud.Api.Cars.Data.MemoryStores;
+using OniCloud.Api.Cars.Core;
+using OniCloud.Api.Cars.Core.Data.MemoryStores;
+using OniCloud.Api.Cars.Core.Services;
 using OniCloud.Api.Cars.Domain.Stores;
 
 namespace OniCloud.Api.Cars
@@ -34,7 +29,8 @@ namespace OniCloud.Api.Cars
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OniCloud.Api.Cars", Version = "v1" });
             });
 
-            services.AddSingleton<ICarsStore, CarsMemoryStore>();
+            services.AddTransient<ICarsStore, CarsMemoryStore>();
+            services.AddTransient<ICarsService, CarsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,11 +1,10 @@
 ﻿using OniCloud.Api.Cars.Domain.Entities;
 using OniCloud.Api.Cars.Domain.Stores;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OniCloud.Api.Cars.Data.MemoryStores
+namespace OniCloud.Api.Cars.Core.Data.MemoryStores
 {
     public class CarsMemoryStore : ICarsStore
     {
@@ -28,6 +27,39 @@ namespace OniCloud.Api.Cars.Data.MemoryStores
         #endregion
 
         #region Publci Methods
+
+        public Task<Car> Save(Car car)
+        {
+            Car carEntity = _cars.FirstOrDefault(c => c.Id == car.Id);
+            if (carEntity is null)
+            {
+                carEntity = new Car
+                {
+                    Id = car.Id
+                };
+            }
+            
+            carEntity.Make = car.Make;
+            carEntity.Model = car.Model;
+            carEntity.Year = car.Year;
+
+            _cars.Add(carEntity);
+
+            return Task.FromResult(carEntity);
+        }
+
+        public Task<bool> Delete(string carId)
+        {
+            int idx = _cars.FindIndex(car => car.Id == carId);
+            if (idx < 0)
+            {
+                return Task.FromResult(false);
+            }
+            
+            _cars.RemoveAt(idx);
+
+            return Task.FromResult(true);
+        }
 
         public Task<Car> GetById(string id)
         {
