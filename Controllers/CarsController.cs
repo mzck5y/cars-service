@@ -42,7 +42,9 @@ namespace OniCloud.Api.Cars.Controllers
         public async Task<IActionResult> DeleteCar(string id)
         {
             bool result = await _service.RemoveCarAsync(id);
-            return result ? Ok() : NotFound();
+            return result 
+                ? Ok() 
+                : NotFound();
         }
 
         [HttpGet]
